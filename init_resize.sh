@@ -78,7 +78,7 @@ fix_partuuid() {
   DISKID="$(fdisk -l "$ROOT_DEV" | sed -n 's/Disk identifier: 0x\([^ ]*\)/\1/p')"
 
   sed -i "s/${OLD_DISKID}/${DISKID}/g" /etc/fstab
-  sed -i "s/${OLD_DISKID}/${DISKID}/" /boot/cmdline.txt
+  sed -i "s/${OLD_DISKID}/${DISKID}/" /boot/firmware/cmdline.txt
 }
 
 check_variables () {
@@ -171,9 +171,9 @@ mkdir -p /run/systemd
 mount /boot
 mount / -o remount,rw
 
-sed -i 's| init=/usr/lib/raspi-config/init_resize.sh||' /boot/cmdline.txt
-if ! grep -q splash /boot/cmdline.txt; then
-  sed -i "s/ quiet//g" /boot/cmdline.txt
+sed -i 's| init=/usr/lib/raspi-config/init_resize.sh||' /boot/firmware/cmdline.txt
+if ! grep -q splash /boot/firmware/cmdline.txt; then
+  sed -i "s/ quiet//g" /boot/firmware/cmdline.txt
 fi
 sync
 
