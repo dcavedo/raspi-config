@@ -6,11 +6,11 @@
 INTERACTIVE=True
 ASK_TO_REBOOT=0
 BLACKLIST=/etc/modprobe.d/raspi-blacklist.conf
-CONFIG=/boot/config.txt
+CONFIG=/boot/firmware/config.txt
 
 is_pi () {
   ARCH=$(dpkg --print-architecture)
-  if [ "$ARCH" = "armhf" ] ; then
+  if [ "$ARCH" = "armhf" -o "$ARCH" = "arm64" ] ; then
     return 0
   else
     return 1
@@ -18,7 +18,7 @@ is_pi () {
 }
 
 if is_pi ; then
-  CMDLINE=/boot/cmdline.txt
+  CMDLINE=/boot/firmware/cmdline.txt
 else
   CMDLINE=/proc/cmdline
 fi
